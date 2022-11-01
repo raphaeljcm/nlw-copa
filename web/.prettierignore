@@ -1,0 +1,12 @@
+*/.js
+node_modules
+build
+dist
+out
+confs
+public
+webpack/*.js
+.webpack
+.vs
+.gitlab-ci.yml
+*.md
