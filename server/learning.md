@@ -11,3 +11,6 @@ npx prisma generate
 
 ## Prisma Studio
 npx prisma studio
+
+## If the error: the table not exists, use this command
+npx prisma db push
