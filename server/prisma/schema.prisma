@@ -19,10 +19,10 @@ model Pool {
   title     String
   code      String   @unique
   createdAt DateTime @default(now())
-  userId    String?
+  ownerId   String?
 
   participants Participant[]
-  owner        User?         @relation(fields: [userId], references: [id])
+  owner        User?         @relation(fields: [ownerId], references: [id])
 }
 
 model Participant {
