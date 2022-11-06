@@ -3,6 +3,7 @@ import jwt from '@fastify/jwt';
 import Fastify from 'fastify';
 
 import { authRoutes } from './routes/auth';
+import { gameRoutes } from './routes/game';
 import { guessRoutes } from './routes/guess';
 import { pollRoutes } from './routes/poll';
 import { userRoutes } from './routes/user';
@@ -21,6 +22,7 @@ async function bootstrap() {
   await fastify.register(userRoutes);
   await fastify.register(guessRoutes);
   await fastify.register(authRoutes);
+  await fastify.register(gameRoutes);
 
   await fastify.register(jwt, {
     secret: process.env.JWT_SECRET!,
