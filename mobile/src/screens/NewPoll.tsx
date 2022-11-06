@@ -6,6 +6,7 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { useState } from "react";
 import { api } from "../services/api";
+import { getToast, TOAST_SUCCESS_KEY } from "../utils/toast";
 
 export function NewPoll() {
   const [title, setTitle] = useState("");
@@ -13,12 +14,8 @@ export function NewPoll() {
   const toast = useToast();
 
   async function handleCreatePoll() {
-    if(!title.trim()) {
-      toast.show({
-        title: 'Informe o nome para o seu bolão',
-        placement: 'top',
-        bgColor: 'red.500'
-      });
+    if (!title.trim()) {
+      return toast.show(getToast('Informe o nome para o seu bolão'));
     }
 
     try {
@@ -26,21 +23,13 @@ export function NewPoll() {
 
       await api.post('polls', { title });
 
-      toast.show({
-        title: 'Bolão criado com sucesso!',
-        placement: 'top',
-        bgColor: 'green.500'
-      });
+      toast.show(getToast('Bolão criado com sucesso!', TOAST_SUCCESS_KEY))
 
       setTitle('');
     } catch (error) {
       console.log(error);
 
-      toast.show({
-        title: 'Não foi possível criar o bolão',
-        placement: 'top',
-        bgColor: 'red.500'
-      })
+      toast.show(getToast('Não foi possível criar o bolão'));
     } finally {
       setIsLoading(false);
     }
