@@ -4,7 +4,7 @@ interface EmptyMyPoolListProps {
   code: string;
 }
 
-export function EmptyMyPoolList({ code }: EmptyMyPoolListProps) {
+export function EmptyMyPollList({ code }: EmptyMyPoolListProps) {
   return (
     <Row flexWrap="wrap" justifyContent="center" p={4}>
       <Text color="gray.200" fontSize="sm">

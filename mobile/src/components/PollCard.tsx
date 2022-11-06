@@ -2,7 +2,7 @@ import { Heading, HStack, Text, VStack } from "native-base";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { Participant, Participants } from "./Participants";
 
-export type PoolCard = {
+export type PollCard = {
   id: string;
   code: string;
   title: string;
@@ -17,11 +17,11 @@ export type PoolCard = {
   }
 }
 
-interface PoolCardProps extends TouchableOpacityProps {
-  data: PoolCard;
+interface PollCardProps extends TouchableOpacityProps {
+  data: PollCard;
 }
 
-export function PoolCard({ data, ...rest }: PoolCardProps) {
+export function PollCard({ data, ...rest }: PollCardProps) {
   return (
     <TouchableOpacity {...rest}>
       <HStack

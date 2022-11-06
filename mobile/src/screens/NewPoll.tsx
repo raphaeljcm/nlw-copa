@@ -5,7 +5,7 @@ import Logo from '../assets/logo.svg';
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 
-export function NewPool() {
+export function NewPoll() {
   return (
     <VStack flex={1} bgColor="gray.900">
       <Header title="Criar novo bolão" />
