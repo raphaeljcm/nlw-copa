@@ -39,11 +39,11 @@ export function Details() {
     }
   }
 
-  const handleCodeShare = useCallback(async () =>  {
+  async function handleCodeShare() {
     await Share.share({
       message: pollDetails.code,
     });
-  }, []);
+  };
 
   useEffect(() => {
     getPollDetails();
@@ -72,10 +72,10 @@ export function Details() {
             />
           </HStack>
 
-          <Guesses pollId={pollDetails.id} />
+          <Guesses pollId={pollDetails.id} code={pollDetails.code} />
         </VStack>
       ): (
-        <EmptyMyPollList code={pollDetails.code} onShare={handleCodeShare} />
+        <EmptyMyPollList code={pollDetails.code} />
       )}
     </VStack>
   );
