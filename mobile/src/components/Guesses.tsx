@@ -43,7 +43,6 @@ export function Guesses({ pollId }: GuessesProps) {
       });
 
       toast.show(getToast('Palpite enviado com sucesso!', TOAST_SUCCESS_KEY));
-
       getGames();
     } catch (error) {
       console.log(error);
