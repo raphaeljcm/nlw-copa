@@ -1,9 +1,10 @@
-import { Button, HStack, Text, useTheme, VStack } from "native-base";
+import { Button, HStack, Modal, Text, useTheme, VStack } from "native-base";
 import { getName } from 'country-list';
 import { Team } from "./Team";
 import { Check, X } from "phosphor-react-native";
 import dayjs from 'dayjs';
 import ptBR from 'dayjs/locale/pt-br';
+import { useState } from "react";
 
 type Guess = {
   id: string;
@@ -30,9 +31,15 @@ interface GameComponentProps {
 }
 
 export function Game({ data, onGuessConfirm, setFirstTeamPoints, setSecondTeamPoints }: GameComponentProps) {
+  const [showModal, setShowModal] = useState(false);
   const { colors, sizes } = useTheme();
 
   const when = dayjs(data.date).locale(ptBR).format('DD [de] MMMM [de] YYYY [às] HH:00[h]');
+
+  function handleGuessConfirmOnModal() {
+    setShowModal(false);
+    onGuessConfirm();
+  }
 
   return (
     <VStack
@@ -56,31 +63,50 @@ export function Game({ data, onGuessConfirm, setFirstTeamPoints, setSecondTeamPo
       <HStack mt={4} w="full" justifyContent="space-between" alignItems="center">
         <Team
           code={data.firstTeamCountryCode}
-          position="right"
+          position="left"
           onChangeText={setFirstTeamPoints}
+          gameId={data.id}
         />
 
         <X color={colors.gray[300]} size={sizes[6]} />
 
         <Team
           code={data.secondTeamCountryCode}
-          position="left"
+          position="right"
           onChangeText={setSecondTeamPoints}
+          gameId={data.id}
         />
       </HStack>
 
       {
         !data.guess &&
+          <Button size="xs" bgColor="green.500" mt={4} onPress={() => setShowModal(true)}>
+            <HStack alignItems="center">
+              <Text color="white" fontSize="xs" fontFamily="heading" mr={3}>
+                CONFIRMAR PALPITE
+              </Text>
 
-        <Button size="xs" bgColor="green.500" mt={4} onPress={onGuessConfirm}>
-          <HStack alignItems="center">
-            <Text color="white" fontSize="xs" fontFamily="heading" mr={3}>
-              CONFIRMAR PALPITE
-            </Text>
+              <Check color={colors.white} size={sizes[4]} />
+            </HStack>
 
-            <Check color={colors.white} size={sizes[4]} />
-          </HStack>
-        </Button>
+            <Modal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+            >
+              <Modal.Content>
+                <Modal.CloseButton />
+                <Modal.Header bgColor="gray.600">
+                  <Text color="white">Você tem certeza que deseja {'\n'}fazer este palpite?</Text>
+                </Modal.Header>
+                <Modal.Body bgColor="gray.600">
+                  <Button.Group space={2}>
+                    <Button flex={1} bgColor="green.500" onPress={handleGuessConfirmOnModal}>Confirmar</Button>
+                    <Button flex={1} bgColor="red.500" onPress={() => setShowModal(false)}>Cancelar</Button>
+                  </Button.Group>
+                </Modal.Body>
+              </Modal.Content>
+            </Modal>
+          </Button>
       }
     </VStack>
   );

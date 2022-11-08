@@ -11,6 +11,55 @@ export async function guessRoutes(fastify: FastifyInstance) {
     return { count };
   });
 
+  fastify.get(
+    '/polls/:pollId/games/:gameId/guesses',
+    { onRequest: [authenticate] },
+    async (request, reply) => {
+      const createGuessParams = z.object({
+        pollId: z.string(),
+        gameId: z.string(),
+      });
+
+      const { pollId, gameId } = createGuessParams.parse(request.params);
+
+      const participant = await prisma.participant.findUnique({
+        where: {
+          userId_pollId: {
+            pollId,
+            userId: request.user.sub,
+          },
+        },
+      });
+
+      console.log('PARTICIPANT: ', participant);
+
+      if (!participant) {
+        return reply.status(404).send({
+          message: "You're not a participant on any game",
+        });
+      }
+
+      const guess = await prisma.guess.findUnique({
+        where: {
+          participantId_gameId: {
+            participantId: participant.id,
+            gameId,
+          },
+        },
+      });
+
+      console.log('GUESS: ', guess);
+
+      if (!guess) {
+        return reply.status(404).send({
+          message: 'We could not find any guesses for this game',
+        });
+      }
+
+      return { guess };
+    },
+  );
+
   fastify.post(
     '/polls/:pollId/games/:gameId/guesses',
     { onRequest: [authenticate] },

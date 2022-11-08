@@ -34,6 +34,7 @@ export function Guesses({ pollId, code }: GuessesProps) {
   }
 
   const handleGuessConfirm = useCallback(async (gameId: string) => {
+    console.log(firstTeamPoints, secondTeamPoints);
     try {
       if (!firstTeamPoints.trim() || !secondTeamPoints.trim()) {
         return toast.show(getToast('Informe o placar do palpite!'));
@@ -65,7 +66,7 @@ export function Guesses({ pollId, code }: GuessesProps) {
         toast.show(getToast('Você já enviou um palpite para este jogo!'));
       }
     }
-  }, []);
+  }, [firstTeamPoints, secondTeamPoints]);
 
   useEffect(() => {
     getGames();
