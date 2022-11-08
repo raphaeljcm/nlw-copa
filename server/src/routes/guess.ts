@@ -31,8 +31,6 @@ export async function guessRoutes(fastify: FastifyInstance) {
         },
       });
 
-      console.log('PARTICIPANT: ', participant);
-
       if (!participant) {
         return reply.status(404).send({
           message: "You're not a participant on any game",
@@ -47,8 +45,6 @@ export async function guessRoutes(fastify: FastifyInstance) {
           },
         },
       });
-
-      console.log('GUESS: ', guess);
 
       if (!guess) {
         return reply.status(404).send({

@@ -34,7 +34,6 @@ export function Guesses({ pollId, code }: GuessesProps) {
   }
 
   const handleGuessConfirm = useCallback(async (gameId: string) => {
-    console.log(firstTeamPoints, secondTeamPoints);
     try {
       if (!firstTeamPoints.trim() || !secondTeamPoints.trim()) {
         return toast.show(getToast('Informe o placar do palpite!'));
