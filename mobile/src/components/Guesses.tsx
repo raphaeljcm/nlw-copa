@@ -85,7 +85,7 @@ export function Guesses({ pollId, code }: GuessesProps) {
           onGuessConfirm={() => handleGuessConfirm(item.id)}
         />
       )}
-      _contentContainerStyle={{ pb: 10 }}
+      _contentContainerStyle={{ pb: 20 }}
       ListEmptyComponent={() => <EmptyMyPollList code={code} />}
     />
   )

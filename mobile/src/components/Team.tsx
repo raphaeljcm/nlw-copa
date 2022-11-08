@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CountryFlag from "react-native-country-flag";
 import { api } from "../services/api";
 import { Input } from "./Input";
+import { Loading } from "./Loading";
 
 type TeamRouteParams = {
   id: string;
@@ -21,6 +22,7 @@ interface TeamProps {
 }
 
 export function Team({ code, position, onChangeText, gameId }: TeamProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [guessWasSent, setGuessWasSent] = useState(false);
   const [guess, setGuess] = useState({} as TeamGuessProps);
 
@@ -29,6 +31,7 @@ export function Team({ code, position, onChangeText, gameId }: TeamProps) {
 
   async function getGuess() {
     try {
+      setIsLoading(true);
       const { data } = await api.get(`polls/${id}/games/${gameId}/guesses`);
 
       if (data) {
@@ -38,12 +41,16 @@ export function Team({ code, position, onChangeText, gameId }: TeamProps) {
     } catch (error) {
       console.log(error);
       setGuessWasSent(false);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     getGuess();
   }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <HStack alignItems="center">
