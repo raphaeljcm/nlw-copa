@@ -3,6 +3,7 @@ import { HStack, useToast, VStack } from "native-base";
 import { useCallback, useEffect, useState } from "react";
 import { Share } from "react-native";
 import { EmptyMyPollList } from "../components/EmptyMyPollList";
+import { Guesses } from "../components/Guesses";
 import { Header } from "../components/Header";
 import { Loading } from "../components/Loading";
 import { Option } from "../components/Option";
@@ -54,7 +55,7 @@ export function Details() {
     <VStack flex={1} bgColor="gray.900">
       <Header title={pollDetails.title} showBackButton showShareButton onShare={handleCodeShare} />
 
-      {pollDetails._count?.participants < 0 ? (
+      {pollDetails._count?.participants > 0 ? (
         <VStack px={5} flex={1}>
           <PollHeader data={pollDetails} />
 
@@ -70,6 +71,8 @@ export function Details() {
               onPress={() => setSelectedOption('ranking')}
             />
           </HStack>
+
+          <Guesses pollId={pollDetails.id} />
         </VStack>
       ): (
         <EmptyMyPollList code={pollDetails.code} onShare={handleCodeShare} />
