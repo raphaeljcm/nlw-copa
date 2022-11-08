@@ -2,16 +2,17 @@ import { Pressable, Row, Text } from "native-base";
 
 interface EmptyMyPoolListProps {
   code: string;
+  onShare: () => void;
 }
 
-export function EmptyMyPollList({ code }: EmptyMyPoolListProps) {
+export function EmptyMyPollList({ code, onShare }: EmptyMyPoolListProps) {
   return (
     <Row flexWrap="wrap" justifyContent="center" p={4}>
       <Text color="gray.200" fontSize="sm">
-        Esse bolão ainda não tem participantes
+        Esse bolão ainda não tem participantes, que tal
       </Text>
 
-      <Pressable onPress={() => {}}>
+      <Pressable onPress={onShare}>
         <Text textDecorationLine="underline" color="yellow.500" textDecoration="underline">
           compartilhar o código
         </Text>

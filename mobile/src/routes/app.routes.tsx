@@ -5,6 +5,7 @@ import { NewPoll } from '../screens/NewPoll';
 import { Polls } from '../screens/Polls';
 import { Platform } from 'react-native';
 import { FindPoll } from '../screens/FindPoll';
+import { Details } from '../screens/Details';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -52,6 +53,12 @@ export function AppRoutes() {
       <Screen
         name="findPoll"
         component={FindPoll}
+        options={{ tabBarButton: () => null }}
+      />
+
+      <Screen
+        name="details"
+        component={Details}
         options={{ tabBarButton: () => null }}
       />
     </Navigator>
